@@ -1,4 +1,9 @@
-# Expense Tracker
+# Expense Tracker API
+
+This is the backend for expense-tracker project. To clone:
+```
+git clone https://github.com/ivyabe/expense-tracker.git
+```
 
 ## Development Setup
 
