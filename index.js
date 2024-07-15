@@ -43,19 +43,12 @@ Users.init({
     password: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    transactionIds: {
-        type: DataTypes.ARRAY(DataTypes.DECIMAL),
-        allowNull: false
-    },
-    categoryIds: {
-        type: DataTypes.ARRAY(DataTypes.DECIMAL),
-        allowNull: false
     }
 }, { sequelize, modelName: 'user' })
 
 // Sync sequelize with the database.
 // If sequelize.storage (/expense-tracker.sqlite3) file does not exist, it will create the file
+// "alter:true" enables sync to update existing data in sequelize (ex. additional columns, updated columns, etc)
 sequelize.sync({alter: true});
 
 //--------------
