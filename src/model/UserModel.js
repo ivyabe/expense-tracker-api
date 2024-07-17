@@ -1,9 +1,8 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../../config/expense-tracker-database');
 
-class TransactionType extends Model {}
-class Users extends Model {}
-Users.init({
+class User extends Model {}
+User.init({
     firstName: {
         type: DataTypes.STRING,
         allowNull: false
@@ -26,3 +25,5 @@ Users.init({
         allowNull: false
     }
 }, { sequelize, modelName: 'user' })
+
+module.exports = User;

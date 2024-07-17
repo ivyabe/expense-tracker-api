@@ -1,74 +1,45 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const { Sequelize, Model, DataTypes } = require('sequelize');
-// const { Model, DataTypes } = require('sequelize');
 
-//--------------
-// Database configuration
+// DATABASE CONFIGURATION
 // Create sequelize instance
-// const sequelize = new Sequelize({
-//     dialect: 'sqlite',
-//     storage: './expense-tracker.sqlite3'
-// })
 const sequelize = require('./config/expense-tracker-database');
 
 // Define schema
-const TransactionType = require('./src/model/TransactionTypeModel');
-// class TransactionType extends Model {}
-// TransactionType.init({
-//     name: {
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     }
-// }, { sequelize, modelName: 'transaction_type' })
-
+const Transaction = require('./src/model/TransactionModel');
 const User = require('./src/model/UserModel');
-// class Users extends Model {}
-// Users.init({
-//     firstName: {
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     },
-//     lastName: {
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     },
-//     email: {
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     },
-//     username: {
-//         type: DataTypes.STRING,
-//         allowNull: false,
-//         unique: true
-//     },
-//     password: {
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     }
-// }, { sequelize, modelName: 'user' })
+const Category = require('./src/model/CategoryModel');
+
+// Define associations
+Category.hasMany(Transaction, { foreignKey: 'categoryId' });
+Transaction.belongsTo(Category, { foreignKey: 'transactionId' });
 
 // Sync sequelize with the database.
 // If sequelize.storage (/expense-tracker.sqlite3) file does not exist, it will create the file
 // "alter:true" enables syncing of db changes (ex. additional columns, updated columns, etc)
 sequelize.sync({alter: true});
 
-//--------------
-// Server Configuration
+// ##############################################
+
+// SERVER CONFIGURATION
 // port = 3000 : where the server app will run
 const port = 3000;
 const app = express();
 
 // MIDDLEWARE
+const AuthController = require('./src/controller/AuthController');
 const UserController = require('./src/controller/UserController');
-const TransactionTypeController = require('./src/controller/TransactionTypeController');
+const CategoryController = require('./src/controller/CategoryController');
+const TransactionController = require('./src/controller/TransactionController');
 
-app.use(UserController);
-app.use(TransactionTypeController);
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(AuthController);
+app.use(UserController);
+app.use(CategoryController);
+app.use(TransactionController);
 
 // Services
 app.get("/", (req, res) => {

@@ -18,9 +18,16 @@ git clone https://github.com/ivyabe/expense-tracker-api.git
 npm install
 ```
 
-3. To run the application server:
+3. To run the application server and generate DB:
 
 ```
 npm run start
 ```
+
+4. Once confirmed that the "expense-tracker.sqlite3" is created, run the command below to insert default values to TRANSACTION_TYPES table
+
+```
+npm run insert
+```
+
 
