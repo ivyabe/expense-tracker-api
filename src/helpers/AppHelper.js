@@ -13,8 +13,14 @@ const generateToken = (user) => {
     return jwt.sign(user, 'secret');
 }
 
+const getUser = (req) => {
+    let token = req.headers['authorization'].split(' ')[1];
+    return jwt.verify(token, 'secret');
+}
+
 module.exports = {
     hashPassword,
     isValidLogin,
-    generateToken
+    generateToken,
+    getUser
 }

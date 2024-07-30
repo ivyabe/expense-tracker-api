@@ -1,13 +1,18 @@
 const express = require('express');
 const Transaction = require('../model/TransactionModel');
-const Validation = require('../operations/category/Validate')
+const Validation = require('../operations/transaction/Validate')
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+const authenticateUser = require('../middleware/AuthenticateUser');
+const { getUser } = require('../helpers/AppHelper');
+
+router.use(authenticateUser);
 
 // get all
-router.get("/transactions", async (req, res) => {
-    let transactions = await Transaction.findAll();
-    res.json(transactions);
-});
+// router.get("/transactions", async (req, res) => {
+//     let transactions = await Transaction.findAll();
+//     res.json(transactions);
+// });
 
 // get transaction by id
 router.get("/transaction/:id", async (req, res) => {
@@ -19,11 +24,19 @@ router.get("/transaction/:id", async (req, res) => {
     }
 });
 
+// get transaction by transaction type
+router.get("/transactions/:transactionTypeId", async (req, res) => {
+    let transactions = await Transaction.findAll({ where: { transactionTypeId: req.params.transactionTypeId } });
+    res.json(transactions);
+});
+
 // add
 router.post("/transaction", async (req, res) => {
     let result = Validation(req.body);
     if (result.isValid) {
-        let transaction = await Transaction.create(req.body);
+        let payload = { ...req.body }
+        payload.userId = getUser(req).userId;
+        let transaction = await Transaction.create(payload);
         res.json(transaction);
     } else {
         res.status(422).json(result.payload);

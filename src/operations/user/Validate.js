@@ -20,7 +20,7 @@ const Validate = async (username, password) => {
     }
 
     if (username && password) {
-        user = await User.findOne({ where: { username: username } })
+        user = await User.findOne({ where: { username: username } });
 
         if (user) {
             let isValid = await isValidLogin(password, user.password);

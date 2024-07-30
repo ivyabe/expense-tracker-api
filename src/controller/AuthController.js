@@ -16,7 +16,8 @@ router.post("/login", async (req, res) => {
     if (result.isValid) {
         // return the token and user object
         let user = {
-            username: result.user.username
+            username: result.user.username,
+            userId: result.user.id
         }
 
         let token = generateToken(user);

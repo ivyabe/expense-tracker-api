@@ -15,6 +15,9 @@ Transaction.init({
         type: DataTypes.STRING,
         allowNull: false
     },
+    note: {
+        type: DataTypes.STRING
+    },
     file: {
         type: DataTypes.STRING
     },
