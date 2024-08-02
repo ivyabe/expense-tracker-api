@@ -7,10 +7,18 @@ const loadUsers = async () => {
     await User.destroy({ truncate: true });
 
     await User.create({
-        firstName: "Barbie",
-        lastName: "Roberts",
-        email: "barbier@yahoo.com",
-        username: "user123",
+        firstName: "Luna",
+        lastName: "Lovegood",
+        email: "luna@yahoo.com",
+        username: "luna",
+        password: await hashPassword("user123")
+    })
+
+    await User.create({
+        firstName: "Hermione",
+        lastName: "Granger",
+        email: "hermione@yahoo.com",
+        username: "hermione",
         password: await hashPassword("user123")
     })
 }

@@ -26,7 +26,8 @@ Transaction.init({
         allowNull: false
     },
     isDeleted: {
-        type: DataTypes.BOOLEAN
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     },
 }, { sequelize, modelName: 'transaction' })
 
