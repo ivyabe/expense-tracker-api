@@ -14,7 +14,7 @@ const Category = require('./src/model/CategoryModel');
 // Define associations
 Category.hasMany(Transaction, { foreignKey: 'categoryId' });
 Transaction.belongsTo(Category, { foreignKey: 'categoryId' });
-// User.hasMany(Category, {foreignKey: 'userId'});
+User.hasMany(Category, {foreignKey: 'userId'});
 
 // Sync sequelize with the database.
 // If sequelize.storage (/expense-tracker.sqlite3) file does not exist, it will create the file

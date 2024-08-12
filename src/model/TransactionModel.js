@@ -29,6 +29,9 @@ Transaction.init({
         type: DataTypes.BOOLEAN,
         defaultValue: false
     },
+    deletedAt: {
+        type: DataTypes.DATE
+    }
 }, { sequelize, modelName: 'transaction' })
 
 module.exports = Transaction;
