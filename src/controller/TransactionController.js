@@ -18,10 +18,21 @@ router.get("/transaction/:id", async (req, res) => {
 });
 
 // get transaction by transaction type
-router.get("/transactions/:transactionTypeId", async (req, res) => {
+router.get("/transactions/type/:transactionTypeId", async (req, res) => {
     let transactions = await Transaction.findAll({ where: 
         { 
             transactionTypeId: req.params.transactionTypeId,
+            userId: getUser(req).userId,
+            isDeleted: 0
+        } });
+    res.json(transactions);
+});
+
+// get transaction by categoryId
+router.get("/transactions/category/:categoryId", async (req, res) => {
+    let transactions = await Transaction.findAll({ where: 
+        { 
+            categoryId: req.params.categoryId,
             userId: getUser(req).userId,
             isDeleted: 0
         } });
